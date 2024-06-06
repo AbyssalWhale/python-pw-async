@@ -3,6 +3,8 @@ from playwright.async_api import async_playwright
 import json
 import os
 
+from helpers.test_run_config import TestRunConfig
+
 
 class Fixtures:
 
@@ -11,15 +13,17 @@ class Fixtures:
 
     @pytest.fixture(scope="session", autouse=True)
     async def one_time_setup_page(self):
-        config_path = await self.get_test_run_config_path()
-        await self.read_config(path=config_path)
+        # config_path = await self.get_test_run_config_path()
+        # await self.read_config(path=config_path)
+        config = await TestRunConfig.init()
+
 
         #
         playwright = await async_playwright().start()
         browser = await playwright.chromium.launch(headless=False)
         context = await browser.new_context()
         page = await context.new_page()
-        await page.goto(self.test_config.get("url"))
+        await page.goto(config.test_config.get("url"))
         yield page
         await browser.close()
         await playwright.stop()
