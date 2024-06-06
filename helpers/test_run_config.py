@@ -3,9 +3,8 @@ import os
 
 
 class TestRunConfig:
-
     __test_config_name = "test-run-config.json"
-    test_config = None
+    __test_config = None
 
     def __init__(self, config_path: str):
         self.config_path = config_path
@@ -17,10 +16,13 @@ class TestRunConfig:
         await instance.__read_config()
         return instance
 
+    async def get_url(self):
+        return self.__test_config.get("url")
+
     async def __read_config(self):
         if os.path.exists(self.config_path):
             with open(self.config_path) as f:
-                self.test_config = json.load(f)
+                self.__test_config = json.load(f)
         else:
             raise Exception(f"Could not find file. Path: {self.config_path}")
 
