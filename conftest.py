@@ -14,14 +14,7 @@ class Fixtures:
         self.__test_run_config = await TestRunConfig.init()
         self.test_results_dir = await self.__create_test_results_folder()
 
-        # playwright = await async_playwright().start()
-        # browser = await playwright.chromium.launch(headless=False)
-        # context = await browser.new_context()
-        # self.__page = await context.new_page()
-        (playwright,
-         browser,
-         context,
-         self.__page) = await  self.__init_playwright(self.test_results_dir)
+        playwright, browser, context, self.__page = await self.__init_playwright(self.test_results_dir)
         await self.__page.goto(await self.__test_run_config.get_url())
 
         yield self
