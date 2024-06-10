@@ -124,3 +124,4 @@ pyrightconfig.json
 # PyCharm
 .idea/
 *.iml
+/test_results
