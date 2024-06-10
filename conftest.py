@@ -24,7 +24,7 @@ class Fixtures:
 
     async def __init_playwright(self, test_results_dir: str):
         playwright = await async_playwright().start()
-        browser = await playwright.chromium.launch(headless=False)
+        browser = await playwright.chromium.launch(headless=True)
         context_resolution = {"width": 640, "height": 480}
         context = await browser.new_context(
             record_video_dir=test_results_dir,
